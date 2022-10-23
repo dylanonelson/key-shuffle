@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div id="root">
+      <div id="toolbar">
+        <button class="shuffle">Shuffle</button>
+        <button class="add-row">Add row</button>
+        <button class="remove-row">Remove row</button>
+      </div>
+      <div id="keys-list"></div>
+    </div>
+  </body>
+
+  <style>
+    #root {
+      bottom: 0;
+      left: 0;
+      position: fixed;
+      right: 0;
+      top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 15px;
+    }
+    #keys-list {
+      width: 100%;
+    }
+    .key-row {
+      align-items: center;
+      display: flex;
+      font-family: monospace, sans-serif;
+      font-size: 24px;
+      line-height: 32px;
+      justify-content: center;
+      margin-bottom: 15px;
+      width: 100%;
+    }
+    .key {
+      border-bottom: 1px solid gray;
+      border-left: 1px solid gray;
+      border-top: 1px solid gray;
+      flex: 0 1 75px;
+      text-align: center;
+    }
+    .key:last-child {
+      border-right: 1px solid gray;
+    }
+  </style>
+
+  <script>
+    function makeKeyRow(keys) {
+      const row = document.createElement('div');
+      row.classList.add('key-row');
+      keys.forEach(function (k) {
+        const el = document.createElement('div')
+        el.classList.add('key');
+        el.textContent = k;
+        row.appendChild(el);
+      });
+      return row;
+    }
+
+    function shuffleKeys(keys) {
+      const shuffled = [];
+      const copied = [...keys];
+      for (let lastUnstruckIndex = copied.length - 1; lastUnstruckIndex >= 0; lastUnstruckIndex -= 1) {
+        const strike = Math.floor(Math.random() * (lastUnstruckIndex + 1));
+        shuffled.push(copied[strike]);
+        copied[strike] = copied[lastUnstruckIndex];
+        copied[lastUnstruckIndex] = null;
+      }
+      return shuffled;
+    }
+
+
+    function main() {
+      const keys = [
+        'C',
+        'C#',
+        'D',
+        'E♭',
+        'E',
+        'F',
+        'F#',
+        'G',
+        'A♭',
+        'A',
+        'B♭',
+        'B',
+      ];
+      const fromStorage = localStorage.getItem('keyRows');
+      const keyRows = fromStorage ? JSON.parse(fromStorage) : [shuffleKeys(keys)];
+      const keyRowsEl = document.querySelector('#keys-list');
+
+      function updateDom() {
+        keyRowsEl.innerHTML = '';
+        keyRows.forEach(function (row) {
+          keyRowsEl.appendChild(makeKeyRow(row));
+        });
+      }
+
+      function updateStorage() {
+        localStorage.setItem('keyRows', JSON.stringify(keyRows));
+      }
+
+      document.querySelector('.shuffle').addEventListener('click', function () {
+        for (let i = 0; i < keyRows.length; i += 1) {
+          keyRows[i] = shuffleKeys(keyRows[i]);
+        }
+        updateStorage();
+        updateDom();
+      });
+
+      document.querySelector('.add-row').addEventListener('click', function () {
+        keyRows.push([...keys]);
+        updateStorage();
+        updateDom();
+      });
+
+      document.querySelector('.remove-row').addEventListener('click', function () {
+        keyRows.pop();
+        updateStorage();
+        updateDom();
+      });
+
+      updateStorage();
+      updateDom();
+    }
+
+    main();
+  </script>
+</html>
