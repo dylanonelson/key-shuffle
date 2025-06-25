@@ -50,6 +50,15 @@
   </style>
 
   <script>
+    /**
+     * Creates an html node representing a row of keys, e.g.:
+     *
+     * <div class="key-row">
+     *   <div class="key">A</div>
+     *   <div class="key">B♭</div>
+     *   < ...etc >
+     * </div>
+     */
     function makeKeyRow(keys) {
       const row = document.createElement('div');
       row.classList.add('key-row');
@@ -62,6 +71,9 @@
       return row;
     }
 
+    /**
+     * Takes a list of keys and returns a shuffled copy.
+     */
     function shuffleKeys(keys) {
       const shuffled = [];
       const copied = [...keys];
@@ -119,7 +131,7 @@
       });
 
       document.querySelector('.add-row').addEventListener('click', function () {
-        keyRows.push([...keys]);
+        keyRows.push(shuffleKeys(keys));
         updateStorage();
         updateDom();
       });
@@ -127,7 +139,7 @@
       document
         .querySelector('.remove-row')
         .addEventListener('click', function () {
-          keyRows.pop();
+          if (keyRows.length) keyRows.pop();
           updateStorage();
           updateDom();
         });
