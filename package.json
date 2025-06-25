@@ -1,0 +1,26 @@
+{
+  "name": "key-shuffle",
+  "version": "1.0.0",
+  "description": "A very simple website for randomizing musical keys, for help practicing an instrument",
+  "engines": {
+    "node": "20.11.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dylanonelson/key-shuffle.git"
+  },
+  "scripts": {
+    "deploy": "firebase deploy",
+    "dev": "live-server public --port=3000"
+  },
+  "author": "Dylan Nelson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dylanonelson/key-shuffle/issues"
+  },
+  "homepage": "https://github.com/dylanonelson/key-shuffle#readme",
+  "devDependencies": {
+    "firebase-tools": "^14.8.0",
+    "live-server": "^1.2.2"
+  }
+}
