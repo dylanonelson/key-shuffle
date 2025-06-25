@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <body>
     <div id="root">
@@ -54,7 +54,7 @@
       const row = document.createElement('div');
       row.classList.add('key-row');
       keys.forEach(function (k) {
-        const el = document.createElement('div')
+        const el = document.createElement('div');
         el.classList.add('key');
         el.textContent = k;
         row.appendChild(el);
@@ -65,7 +65,11 @@
     function shuffleKeys(keys) {
       const shuffled = [];
       const copied = [...keys];
-      for (let lastUnstruckIndex = copied.length - 1; lastUnstruckIndex >= 0; lastUnstruckIndex -= 1) {
+      for (
+        let lastUnstruckIndex = copied.length - 1;
+        lastUnstruckIndex >= 0;
+        lastUnstruckIndex -= 1
+      ) {
         const strike = Math.floor(Math.random() * (lastUnstruckIndex + 1));
         shuffled.push(copied[strike]);
         copied[strike] = copied[lastUnstruckIndex];
@@ -73,7 +77,6 @@
       }
       return shuffled;
     }
-
 
     function main() {
       const keys = [
@@ -91,7 +94,9 @@
         'B',
       ];
       const fromStorage = localStorage.getItem('keyRows');
-      const keyRows = fromStorage ? JSON.parse(fromStorage) : [shuffleKeys(keys)];
+      const keyRows = fromStorage
+        ? JSON.parse(fromStorage)
+        : [shuffleKeys(keys)];
       const keyRowsEl = document.querySelector('#keys-list');
 
       function updateDom() {
@@ -119,11 +124,13 @@
         updateDom();
       });
 
-      document.querySelector('.remove-row').addEventListener('click', function () {
-        keyRows.pop();
-        updateStorage();
-        updateDom();
-      });
+      document
+        .querySelector('.remove-row')
+        .addEventListener('click', function () {
+          keyRows.pop();
+          updateStorage();
+          updateDom();
+        });
 
       updateStorage();
       updateDom();

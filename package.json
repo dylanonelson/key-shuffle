@@ -11,7 +11,8 @@
   },
   "scripts": {
     "deploy": "firebase deploy",
-    "dev": "live-server public --port=3000"
+    "dev": "live-server public --port=3000",
+    "format": "prettier public --write"
   },
   "author": "Dylan Nelson",
   "license": "ISC",
@@ -21,6 +22,7 @@
   "homepage": "https://github.com/dylanonelson/key-shuffle#readme",
   "devDependencies": {
     "firebase-tools": "^14.8.0",
-    "live-server": "^1.2.2"
+    "live-server": "^1.2.2",
+    "prettier": "^3.2.5"
   }
 }
